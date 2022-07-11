@@ -1,0 +1,3 @@
+export const LOAD_POKEMONS = "LOAD_POKEMONS";
+export const SET_POKEMONS = "SET_POKEMONS";
+
