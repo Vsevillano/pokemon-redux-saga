@@ -1,5 +1,5 @@
 export const getAPIPokemons = async() => {
-    return fetch('https://pokeapi.co/api/v2/pokemon?limit=1154&offset=0').then(res => res.json()) 
+    return fetch('https://pokeapi.co/api/v2/pokemon?limit=151').then(res => res.json()) 
 }
 
 export const getPokemonByName = async(name) => {

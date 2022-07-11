@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addNote, loadNotes, saveNotes } from "./actions/actions";
 import { NewNoteInput } from "./components/NewNoteInput";
@@ -9,6 +9,8 @@ import './index.css'
 function App() {
   const notes = useSelector((state) => state.notes);
   const pokemons = useSelector((state) => state.pokemons);
+
+  const [pokemonInfo, setpokemonInfo] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -22,6 +24,14 @@ function App() {
 
   const onLoad = () => {
     dispatch(loadNotes())
+  }
+
+  const onPokemonClick = () => {
+    setpokemonInfo({})
+  };
+
+  const onBackClick = () => {
+    setpokemonInfo(null)
   }
 
     useEffect(() => {
@@ -38,18 +48,49 @@ function App() {
             </a>
           </div>
         </nav> 
-        <div className='container-fluid px-0'> 
+        {!pokemonInfo ? (
+        <div className='container-fluid'> 
           <div className="row">
-          {pokemons?.results && (
-            pokemons?.results.map((pokemon) => {
-              return <Pokemon key={pokemon.name} name={pokemon.name} url={pokemon.url} />
-            })
-          )}
+            <NewNoteInput addNote={onAddNote} />
+            <hr />
+            {/* <ul>
+              {notes.map((note) => {
+                return <li key={note}>{note}</li>;
+              })}
+            </ul> */}
+            <hr />
+            <button onClick={onSave}>Save</button>
+            <button onClick={onLoad}>Load</button>
+          </div>
+
+          <div className="row">
+            {pokemons?.results && (
+              pokemons?.results.map((pokemon) => {
+                return <Pokemon key={pokemon.name} name={pokemon.name} url={pokemon.url} onclick={onPokemonClick}/>
+              })
+            )}
           </div>
         </div>
+        ) : (
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-12">
+                <span onClick={onBackClick}><i className="fa-solid fa-arrow-left"></i> Volver</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        
       </div>
     </>
   );
 }
 
 export default App;
+
+
+
+
+
+
